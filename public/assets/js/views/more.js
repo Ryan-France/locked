@@ -188,7 +188,7 @@ export function settings() {
         const me = S.me, blob = new Blob([JSON.stringify({ profile: { name: me.name, device: me.device, identity: me.identity }, settings: s, daily: me.daily, activities: me.activities }, null, 1)], { type: 'application/json' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'locked-my-data.json'; a.click();
       });
-      root.querySelector('#rst').addEventListener('click', () => { if (confirm('Reset everything saved on this device?')) resetLocal(); });
+      root.querySelector('#rst').addEventListener('click', () => sheet('<h3>Reset this preview?</h3><p>Messages, kudos, groups, manual workouts and settings saved on this device will be cleared.</p><button class="btn block" id="rs-go">Reset</button>', (el) => el.querySelector('#rs-go').addEventListener('click', resetLocal)));
       root.querySelector('#del').addEventListener('click', () => sheet('<h3>Delete account</h3><p>In the live app this permanently deletes your profile, scores, messages and device connections within 30 days, as GDPR requires. In this preview there is no account to delete.</p>'));
     },
   };

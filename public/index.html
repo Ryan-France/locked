@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-IE" data-theme="grit" data-mode="dark">
+<html lang="en-IE" data-look="grit" data-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -18,7 +18,7 @@
   // apply saved theme before first paint
   try { const s = (JSON.parse(localStorage.getItem('locked.v1')) || {}).settings || {};
     const mode = s.mode === 'system' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : (s.mode || 'dark');
-    document.documentElement.dataset.theme = s.theme || 'grit'; document.documentElement.dataset.mode = mode; } catch (e) {}
+    document.documentElement.dataset.look = s.theme || 'grit'; document.documentElement.dataset.mode = mode; } catch (e) {}
 </script>
 </head>
 <body>

@@ -86,7 +86,7 @@ export function view(id) {
     ${detail ? `<h2 class="sec"><span>Recent workouts</span></h2><div class="card"><div class="list">${recent.map((a) => `<a class="li" href="#/u/${p.id}/a/${a.id}"><span class="ic" style="width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:var(--r-xs)">${icon(SPORT_ICON[a.sport] || 'pulse')}</span><span class="grow"><span class="ttl">${esc(a.name)} ${a.manual ? manualTag() : ''}</span><span class="s">${fmtDate(a.date, { weekday: 'short', day: 'numeric', month: 'short' })} · ${hm(a.minutes)}${a.km ? ' · ' + fmt(a.km, 1) + ' km' : ''}</span></span><span class="num">${a.stress}</span></a>`).join('') || '<p class="muted">No workouts yet.</p>'}</div></div>` : ''}
   `;
   return {
-    title: me ? 'Profile' : p.first, back: me ? null : 'javascript:history.back()', html,
+    title: me ? 'Profile' : p.first, back: me ? null : 'history', html,
     actions: me ? `<a class="iconbtn" href="#/settings" aria-label="Settings">${icon('settings')}</a>` : undefined,
     mount(root) {
       root.addEventListener('click', (e) => { const b = e.target.closest('[data-addf]'); if (b) { b.outerHTML = '<span class="tag">Request sent</span>'; toast(`Friend request sent to ${p.first}`); } });
@@ -182,5 +182,5 @@ export function activity(id, aid) {
     ${zt ? `<h2 class="sec"><span>Heart-rate zones</span></h2><div class="card">${z.map((v, i) => `<div class="row" style="margin:6px 0"><span class="lbl" style="width:28px">Z${i + 1}</span><span style="flex:1;height:10px;background:var(--chip);border-radius:2px;overflow:hidden"><i style="display:block;height:100%;width:${v / zt * 100}%;background:var(--z${i + 1})"></i></span><span class="num" style="width:70px;text-align:right">${hm(v)}</span></div>`).join('')}</div>` : ''}
     ${a.sets ? `<h2 class="sec"><span>Sets</span></h2><div class="card tscroll"><table class="t"><thead><tr><th>Lift</th><th class="n">Weight</th><th class="n">Reps</th></tr></thead><tbody>${a.sets.map((s) => `<tr><td style="text-transform:capitalize">${esc(s.lift)}</td><td class="n">${s.kg} kg</td><td class="n">${s.reps}</td></tr>`).join('')}</tbody></table></div>` : ''}
     <p class="sub mt">Recorded by ${a.manual ? 'hand (manual entry)' : esc(p.device === 'apple' ? 'Apple Watch' : p.device[0].toUpperCase() + p.device.slice(1))}. Training stress is worked out from ${esc(p.first)}'s own heart-rate range.</p>`;
-  return { title: a.name, back: 'javascript:history.back()', html, mount: bindPosts };
+  return { title: a.name, back: 'history', html, mount: bindPosts };
 }

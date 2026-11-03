@@ -20,10 +20,11 @@ const FONTS = {
 export function applyTheme() {
   const s = S.settings, root = document.documentElement;
   const mode = s.mode === 'system' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : s.mode;
-  root.dataset.theme = s.theme; root.dataset.mode = mode;
+  root.dataset.look = s.theme; root.dataset.mode = mode;
   root.dataset.density = s.theme === 'nerdy' ? 'dense' : 'normal';
   document.getElementById('font-link').href = `https://fonts.googleapis.com/css2?${FONTS[s.theme]}&display=swap`;
-  document.querySelector('meta[name="theme-color"]').content = getComputedStyle(root).getPropertyValue('--bg').trim() || '#0b0b0b';
+  const tc = document.querySelector('meta[name="theme-color"]');
+  if (tc) tc.content = getComputedStyle(root).getPropertyValue('--bg').trim() || '#0b0b0b';
 }
 
 // ---------- routes ----------
@@ -68,7 +69,8 @@ function rail(active) {
 
 function topbar(v) {
   const unread = pendingRequests().length + (S.local.read.notifications ? 0 : 3);
-  const back = v.back ? `<a class="back" href="${v.back}" aria-label="Back">${icon('back')}</a>` : `<span class="mlogo">${logo(30)}</span>`;
+  const back = v.back === 'history' ? `<button class="back" data-hback aria-label="Back">${icon('back')}</button>`
+    : v.back ? `<a class="back" href="${v.back}" aria-label="Back">${icon('back')}</a>` : `<span class="mlogo">${logo(30)}</span>`;
   const acts = v.actions ?? `<a class="iconbtn" href="#/messages" aria-label="Messages">${icon('chat')}</a><a class="iconbtn" href="#/notifications" aria-label="Notifications">${icon('bell')}${unread ? '<span class="dot"></span>' : ''}</a>`;
   return `${back}<h1>${esc(v.title)}</h1><div class="acts">${acts}</div>`;
 }
@@ -100,6 +102,7 @@ export const rerender = () => { const y = window.scrollY; return render().then((
 document.addEventListener('click', (e) => {
   const i = e.target.closest('[data-info]');
   if (i) { e.preventDefault(); const [t, d] = INFO[i.dataset.info] || ['', '']; sheet(`<h3>${esc(t)}</h3><p>${esc(d)}</p>`); return; }
+  if (e.target.closest('[data-hback]')) { history.length > 1 ? history.back() : (location.hash = '#/home'); return; }
   const m = e.target.closest('[data-manual]');
   if (m) { e.preventDefault(); e.stopPropagation(); const [t, d] = INFO.manual; sheet(`<h3>${t}</h3><p>${d}</p>`); }
 });
