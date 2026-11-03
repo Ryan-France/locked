@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-IE" data-theme="grit" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Locked</title>
+<meta name="description" content="Compete with your friends on recovery, training load and sleep, whatever watch you wear.">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/themes.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>
+  // apply saved theme before first paint
+  try { const s = (JSON.parse(localStorage.getItem('locked.v1')) || {}).settings || {};
+    const mode = s.mode === 'system' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : (s.mode || 'dark');
+    document.documentElement.dataset.theme = s.theme || 'grit'; document.documentElement.dataset.mode = mode; } catch (e) {}
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".04 .06" numOctaves="2" seed="7" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="3" result="speck"/>
+    <feDisplacementMap in="d" in2="speck" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+<nav class="rail" id="rail" aria-label="Main"></nav>
+<div class="app">
+  <header class="top" id="top"></header>
+  <main class="wrap" id="main" tabindex="-1"><p class="muted">Loading…</p></main>
+</div>
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

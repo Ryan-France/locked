@@ -1,0 +1,10 @@
+{
+  "name": "Locked",
+  "short_name": "Locked",
+  "description": "Compete with your friends on recovery, training load and sleep, whatever watch you wear.",
+  "start_url": "./#/home",
+  "display": "standalone",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
+  "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

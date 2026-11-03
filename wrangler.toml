@@ -1,0 +1,14 @@
+# Cloudflare config. The app (public/) deploys to Cloudflare Pages on the free plan;
+# the Worker + D1 below are ready for when real accounts and device sync go live.
+name = "locked-api"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+
+# npx wrangler d1 create locked   → paste the id here
+[[d1_databases]]
+binding = "DB"
+database_name = "locked"
+database_id = "REPLACE_ME"
+
+[triggers]
+crons = ["0 17 * * SUN", "0 18 * * SUN"]   # one of these is 18:00 in Dublin, winter or summer
